@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8" />  
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=no, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" /> 
+<title>嫦娥爱色兔</title>
+<script src="js/easeljs-0.7.1.min.js"></script>
+<script src="js/tweenjs-0.5.1.min.js"></script>
+<script src="js/movieclip-0.7.1.min.js"></script>
+<script src="js/preloadjs-0.4.1.min.js"></script>
+<script src="js/moon.js"></script>
+<script src="js/jquery.js"></script>
+<style>
+	*{-webkit-touch-callout:none;
+	-webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
+-webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+-webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+-webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
+	}
+	#sharediv{width:100%; height:100%; background:#000; opacity:0.9; position:fixed; left:0px; top:0px; z-index:9999; text-align:right; display:none;}
+	#sharediv img{width:412px;}
+</style>
+<script>
+
+
+//*配置文件********************************************
+//关卡
+var guanka= 0;
+//百分比
+var perNum=0;
+ 
+
+//*****************************************************
+var canvas, stage, exportRoot;
+
+function init2() {
+	canvas = document.getElementById("canvas");
+	exportRoot = new lib.moon();
+
+	stage = new createjs.Stage(canvas);
+	stage.addChild(exportRoot);
+	stage.update();
+	stage.enableMouseOver();
+
+	createjs.Ticker.setFPS(lib.properties.fps);
+	createjs.Ticker.addEventListener("tick", stage);
+	
+}
+function init() {
+	canvas = document.getElementById("canvas");
+	images = images||{};
+
+	var loader = new createjs.LoadQueue(false);
+	loader.addEventListener("fileload", handleFileLoad);
+	loader.addEventListener("complete", handleComplete);
+	loader.loadManifest(lib.properties.manifest);
+}
+
+function handleFileLoad(evt) {
+	if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
+}
+
+function handleComplete() {
+	exportRoot = new lib.moon();
+
+	stage = new createjs.Stage(canvas);
+	stage.addChild(exportRoot);
+	stage.update();
+	stage.enableMouseOver();
+	
+	stage.enableMouseOver();
+	
+	stage.enableMouseOver(10);
+	stage.mouseMoveOutside = true; // keep tracking the mouse even when it leaves the canvas
+	createjs.Touch.enable(stage);
+
+	createjs.Ticker.setFPS(lib.properties.fps);
+	createjs.Ticker.addEventListener("tick", stage);
+	//jQuery("#loading").hide();
+}
+</script>
+</head>
+
+<body onLoad="init();" style="background-color:#202330; margin:0px; padding:0px;">
+	<canvas id="canvas" width="720" height="1100" style="background-color:#202330"></canvas>
+<div id="moregame" style="display:none;position:fixed; bottom:10px; left:0px;font-size:40px; width:100%; text-align:center;"><a href="javascript:void(0);" onClick="clickMore();">更多游戏</a></div>      
+</body>
+<script language=javascript>
+		var mebtnopenurl = 'http://www.weixin199.com/youxi';
+var thegameurl ="http://www.weixin199.com/youxi/games/ceast/"; 
+var guanzhuurl ="http://mp.weixin.qq.com/s?__biz=MjM5ODQzODk0MA==&mid=200754961&idx=1&sn=343f5c361ad670bc05f6bc683da7a153#rd";
+		window.shareData = {
+		        "imgUrl": "http://mmbiz.qpic.cn/mmbiz/2zpp2iaH4HWGLukSxlQu0sTSOwwCVp8g7eiaZoAAM3q6mDdocibqom8xMc4Gd43ibQJk1LtpyPxQnqodtiamvowYzNg/640",
+		        "timeLineLink": thegameurl,
+		        "tTitle": "嫦娥爱色兔",
+		        "tContent": "快来帮助嫦娥收集玉兔吧！"
+		};
+				
+		function goHome(){
+			window.location=mebtnopenurl;
+		}
+		function clickMore(){
+			if((window.location+"").indexOf("f=zf",1)>0){
+				window.location = mebtnopenurl;
+			 }
+			 else{
+				goHome();
+			 }
+		}
+		function dp_share(){
+			document.getElementById("share").style.display="";
+			
+		}
+		function dp_Ranking(){
+			window.location=mebtnopenurl;
+		}
+
+		function showAd(){
+		}
+		function hideAd(){
+		}
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		    
+		    WeixinJSBridge.on('menu:share:appmessage', function(argv) {
+		        WeixinJSBridge.invoke('sendAppMessage', {
+		            "img_url": window.shareData.imgUrl,
+		            "link": window.shareData.timeLineLink,
+		            "desc": window.shareData.tContent,
+		            "title": window.shareData.tTitle
+		        }, onShareComplete);
+		    });
+
+		    WeixinJSBridge.on('menu:share:timeline', function(argv) {
+		        WeixinJSBridge.invoke('shareTimeline', {
+		            "img_url": window.shareData.imgUrl,
+		            "img_width": "640",
+		            "img_height": "640",
+		            "link": window.shareData.timeLineLink,
+		            "desc": window.shareData.tContent,
+		            "title": window.shareData.tTitle
+		        }, onShareComplete);
+		    });
+		}, false);
+		</script>
+		<div id=share style="display: none">
+			<img width="100%" src="share.png"
+				style="position: fixed; z-index: 9999; top: 0; left: 0; display: "
+				ontouchstart="document.getElementById('share').style.display='none';" />
+		</div>
+			<script type="text/javascript">
+            var myData = { gameid: "ceast" };
+			 var domain = ["oixm.cn", "hiemma.cn", "peagame.net"][parseInt(Math.random() * 3)];
+			window.shareData.timeLineLink = thegameurl;
+			function dp_submitScore(score,percent){
+					if(score>0){
+						myData.score = parseInt(score);
+						myData.scoreName ="收集了"+score+"只兔子";		
+						document.title = window.shareData.tTitle = "我为嫦娥姐姐集了"+score+"只兔子，击败了"+percent+"%的人，你也来帮下嫦娥吧！";
+					}
+			}
+			function onShareComplete(res) {
+                if (localStorage.myuid && myData.score != undefined) {
+                    setTimeout(function(){
+                        if (confirm("？")) {
+                            window.location = mebtnopenurl;
+                        }
+                        else {
+                            document.location.href = mebtnopenurl;
+                        }
+                    }, 500);
+                }
+				else {
+		        	document.location.href = guanzhuurl ;
+				}
+	        }
+			</script>
+			<div style="display: none;">
+			
+			</div>
+</html>
